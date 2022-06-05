@@ -81,3 +81,14 @@ export const archiveRecord = async (req, res) => {
           return res.status(500).send(``);
       }
 };
+
+export const deleteRecord = async (req, res) => {
+    
+    try {
+        return res.status(200).send(``)
+
+      }
+      catch(err) {
+          return res.status(500).send(``);
+      }
+};
