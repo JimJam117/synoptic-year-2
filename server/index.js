@@ -22,7 +22,6 @@ mongoose.connect(mongo_url).then(console.log("connected to db with mongoose")).c
 app.use(cors());
 app.use(express.json());
 
-
 app.get('/', (req, res) => {
     res.send('hello there')
 })
@@ -31,10 +30,11 @@ app.get('/', (req, res) => {
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
 
+
 // default route
-app.get('*', (req, res) => {
-    res.redirect('/');
-});
+// app.get('*', (req, res) => {
+//     res.redirect('/');
+// });
 
 
 
