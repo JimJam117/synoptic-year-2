@@ -1,4 +1,3 @@
-import bcrypt from 'bcrypt'
 import Location from '../models/Location.js'
 
 
