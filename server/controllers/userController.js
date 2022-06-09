@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt'
 import User from '../models/User.js'
 
 // index users
-export const getUsers = async (req, res) => {
+export const indexUsers = async (req, res) => {
 
     try { 
         // get all users
@@ -16,7 +16,7 @@ export const getUsers = async (req, res) => {
 }
 
 // show a user
-export const getUser = async (req, res) => {
+export const showUser = async (req, res) => {
 
     try { 
         // get single user
@@ -30,7 +30,7 @@ export const getUser = async (req, res) => {
 }
 
 // update user
-export const editUser = async (req, res) => {
+export const updateUser = async (req, res) => {
 
     try {
         /// validation... need user sessions
