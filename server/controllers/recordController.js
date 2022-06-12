@@ -5,90 +5,189 @@ import Record from '../models/Record.js'
 export const createRecord = async (req, res) => {
     
     try {
-        return res.status(200).send(``)
+         // check if the user is an Admin
+         const user = await User.findOne({ _id : req.body.userId });
+         if (user === null) {
+             return res.status(404).send(`User was not found, please include userId`)
+         }
 
+        const newRecord = new Record({
+            creatorId: req.body.userId,
+            locationId: req.body.locationId,
+            type: req.body.type,
+            severity: req.body.severity,
+            details: req.body.details,
+        });
+
+        const record = await  newRecord.save();
+        return res.status(201).send(`record ${record._id} created.`);
       }
+      
       catch(err) {
-          return res.status(500).send(``);
+          console.log(err);
+          return res.status(500).send(`Server error ${err}`);
       }
 };
 
 export const indexActiveRecords = async (req, res) => {
     
-    try {
-        return res.status(200).send(``)
-
+    try {       
+         // get all records
+        const records = await Record.find({'isArchived': 'false'});
+        return res.status(200).json(records)
       }
       catch(err) {
-          return res.status(500).send(``);
+          return res.status(500).send(err);
       }
 };
 
 export const indexHistoricalRecords = async (req, res) => {
     
     try {
-        return res.status(200).send(``)
+        // get all records
+        const records = await Record.find({'isArchived': 'true'});
+        return res.status(200).json(records)
 
       }
       catch(err) {
-          return res.status(500).send(``);
+          return res.status(500).send(err);
       }
 };
 
 export const indexAllRecords = async (req, res) => {
     
     try {
-        return res.status(200).send(``)
+        // get all records
+        const records = await Record.find();
+        return res.status(200).json(records)
 
       }
       catch(err) {
-          return res.status(500).send(``);
+          return res.status(500).send(err);
       }
 };
 
 
 
 export const showRecord = async (req, res) => {
-    
-    try {
-        return res.status(200).send(``)
-
-      }
-      catch(err) {
-          return res.status(500).send(``);
-      }
+    try { 
+        // get single record
+        const record = await Record.findById(req.params.id);
+        if (!record) { return res.status(404).send("Record not found.") }
+        return res.status(200).json(record);
+    }
+    catch(err) {
+        return res.status(500).json(err);
+    } 
 };
 
 
 export const updateRecord = async (req, res) => {
-    
     try {
-        return res.status(200).send(``)
+        // check if the user exists
+        const user = await User.findOne({ _id : req.body.userId });
+        if (user === null) {
+            return res.status(404).send(`User was not found, please provide valid userId`)
+        }
 
-      }
-      catch(err) {
-          return res.status(500).send(``);
-      }
+        // check if this record id exists
+        const check = await Record.findOne({_id: req.params.id});
+        if (check === null) {
+            return res.status(404).send(`Record not found`)
+        }
+
+
+
+        // if the user is not admin, check if it is record owner
+        if (!user.isAdmin) {
+            // if user is record owner
+            if (userId === check.creatorId) {
+
+
+            }
+            else {
+                return res.status(400).send(`User is not admin or the record owner, cannot update record!`)
+            }
+        }
+
+        // if user is admin
+        else {
+
+        }
+
+
+
+
+
+
+    // update location object
+    await Location.findByIdAndUpdate( req.params.id, {
+        name: req.body.name,
+        description: req.body.description,
+        coordinates: req.body.coordinates,
+        isArchived: req.body.isArchived
+      })
+
+      const updatedLocation = await Location.findOne({ _id: req.params.id})
+     
+      return res.status(201).send(`Space ${req.params.id} (@${updatedLocation.coordinates}) updated.`);
+
+    }
+
+    catch (err) {
+        console.log(err);
+        return res.status(500).send(`Server error ${err}`);
+    }
 };
 
 export const archiveRecord = async (req, res) => {
     
     try {
-        return res.status(200).send(``)
+        // check if the user is an Admin
+        const user = await User.findOne({ _id : req.body.userId });
+        if (user === null) {
+            return res.status(404).send(`User was not found, please provide userId`)
+        }
+        if (!user.isAdmin) {
+            return res.status(400).send(`User is not admin, cannot update records!`)
+        }
 
+      // check if this record id exists
+      const check = await Record.findOne({_id: req.params.id});
+      if (check === nullRecord) {
+            return res.status(404).send(`Record not found`)
       }
-      catch(err) {
-          return res.status(500).send(``);
-      }
+
+    // update Record object
+    await Record.findByIdAndUpdate( req.params.id, {
+        isArchived: "True"
+      })
+      return res.status(201).send(`Record ${req.params.id} archived.`);
+    }
+
+    catch (err) {
+        console.log(err);
+        return res.status(500).send(`Server error ${err}`);
+    }
 };
 
 export const deleteRecord = async (req, res) => {
     
     try {
-        return res.status(200).send(``)
+        // check if the user is an Admin
+        const user = await User.findOne({ _id : req.body.userId });
+        if (user === null) {
+            return res.status(404).send(`User was not found, please include userId`)
+        }
+        if (!user.isAdmin) {
+          return res.status(400).send(`User is not admin, cannot delete records!`)
+      }
 
-      }
-      catch(err) {
-          return res.status(500).send(``);
-      }
+      const deletedRecord = await Record.findByIdAndRemove(req.params.id);
+      res.status(200).json({msg: `Record deleted: ${req.params.id}`, deletedRecord});
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(500).send(`Server error ${err}`);
+    }
 };
