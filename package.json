@@ -1,1 +1,6 @@
-{}
+{
+  "dependencies": {
+    "axios": "^0.27.2",
+    "http-server": "^14.1.1"
+  }
+}

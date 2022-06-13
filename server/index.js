@@ -5,6 +5,8 @@ import cors from 'cors';
 // routes
 import authRoutes from './routes/auth.js'
 import userRoutes from './routes/user.js'
+import locationRoutes from './routes/location.js'
+import recordRoutes from './routes/record.js'
 
 // models
 import User from './models/User.js';
@@ -29,6 +31,9 @@ app.get('/', (req, res) => {
 // routes
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
+app.use('/location', locationRoutes);
+app.use('/record', recordRoutes);
+
 
 
 // default route

@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const locationSchema = new mongoose.Schema({
         creatorId: {
-            type: ObjectID,
+            type: mongoose.Schema.Types.ObjectId,
             required: true
         },
         name: {
