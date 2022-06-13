@@ -1,11 +1,11 @@
 import Router from 'express';
-import { editUser, getUsers, getUser, deleteUser } from '../controllers/userController.js';
+import { updateUser, indexUsers, showUser, deleteUser } from '../controllers/userController.js';
 
 const router = Router();
 
-router.get('/', getUsers);
-router.put('/:id', editUser);
-router.get('/:id', getUser);
+router.get('/', indexUsers);
+router.put('/:id', updateUser);
+router.get('/:id', showUser);
 router.delete('/:id', deleteUser);
 
 
