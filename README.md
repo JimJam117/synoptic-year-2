@@ -1,5 +1,5 @@
 # Dangerous Weather Alert System
-## Synoptic Project Year 2 - Group 70
+Synoptic Project Year 2 - Group 70
 
 # Setup Instructions
 
