@@ -2,20 +2,20 @@ import mongoose from 'mongoose';
 
 const recordSchema = new mongoose.Schema({
         creatorId: {
-            type: ObjectID,
+            type: mongoose.Schema.Types.ObjectId,
             required: true
         },
         locationId: {
-            type: ObjectID
+            type: mongoose.Schema.Types.ObjectId
         },
         confirmedByUserID: {
-            type:ObjectID
+            type:mongoose.Schema.Types.ObjectId
         },
         type: {
             type:String
         },
         severity: {
-            type:int
+            type:Number
         },
         details: {
             type: String

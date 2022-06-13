@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,25 +25,9 @@
     </div>
     
     <div class="container">
-      <div class="form-container justify-content-center card-deck mb-3 text-center">
-        <form action="/login" method="POST">
-         
-            <h2 class="mb-3">Login</h2>
-            <div >
-              <label class="sr-only" for="email">Email</label> &nbsp;
-              <input class="form-control" placeholder="Email address" type="email" id="email" name="email" required>
-            </div>
- 
-            <div >
-              <label class="sr-only"  for="password">Password</label> &nbsp;
-              <input class="form-control" placeholder="Password" type="password" id="password" name="password" required> <br>
-            </div>
+        <h2>List of users:</h2>
+        <div id="users"></div>
 
-            <button class="btn mb-4 btn-lg btn-primary btn-block" type="submit">Login</button>
-            <a href="/register">Register</a>
-
-        </form>
-      </div>
         <footer class="pt-4 my-md-5 pt-md-5 border-top">
             UEA Synpotic Project Year 2 - Group 70
           </footer>
@@ -55,17 +36,41 @@
 </body>
 
 <script>
-const attemptLogin = () => {
-      
-      axios.get('')
+const index = () => {
+      const list = document.querySelector('#users')
+      axios.get('http://localhost:5001/user')
           .then(response => {
-            console.log(`list of records`, response.data);
+            console.log(`list of users`, response.data);
 
+            if (response.data.length == 0) {
+                const noneFoundText = document.createTextNode("No users found");
+                list.appendChild(noneFoundText);
+            }
+            else {
+                response.data.forEach(user => {
+                // Create user 
+                const userElement = document.createElement('div')
+
+                // Create user link
+                const userLink = document.createElement('a')
+                const userLinkText = document.createTextNode(user.name + " - " + user.email)
+                userLink.appendChild(userLinkText)
+
+                // add the href to the link
+                userLink.href = ("/userDetails/" + user._id);
+
+                // add the link to our div
+                userElement.appendChild(userLink);
+
+                // Add div to list
+                list.appendChild(userElement)
+            })
+            }
           })
           .catch(error => console.error(error));
     };
   
-
-    attemptLogin();
+  
+      index();
       </script>
 </html>
