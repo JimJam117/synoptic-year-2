@@ -1,10 +1,76 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Register</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <title>Synpotic Year 2</title>
 </head>
 <body>
 
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+    <h5 class="my-0 mr-md-auto font-weight-normal">Dangerous Weather System</h5>
+    <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-dark" href="index">Home</a>
+        <a class="p-2 text-dark" href="usersList">Users</a>
+        <a class="p-2 text-dark" href="locationsList">Locations</a>
+        <a class="p-2 text-dark" href="activeRecords">Active Dangers</a>
+        <a class="p-2 text-dark" href="historicalRecords">Historical Dangers</a>
+    </nav>
+    <a class="btn btn-outline-primary" href="register">Sign up</a>
+</div>
+
+<div class="container">
+    <div class="form-container justify-content-center card-deck mb-3 text-center">
+        <form action="/login" method="POST">
+
+            <h2 class="mb-3">Register</h2>
+            <div >
+                <label class="sr-only" for="name">Name</label> &nbsp;
+                <input class="form-control" placeholder="Name" type="name" id="name" name="name" required>
+            </div>
+
+            <div >
+                <label class="sr-only" for="email">Email</label> &nbsp;
+                <input class="form-control" placeholder="Email address" type="email" id="email" name="email" required>
+            </div>
+
+            <div >
+                <label class="sr-only"  for="password">Password</label> &nbsp;
+                <input class="form-control" placeholder="Password" type="password" id="password" name="password" required> <br>
+            </div>
+
+            <button class="btn mb-4 btn-lg btn-primary btn-block" type="submit">Register</button>
+            <a href="/register">Already have an account? Login</a>
+
+        </form>
+    </div>
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        UEA Synpotic Project Year 2 - Group 70
+    </footer>
+</div>
+
 </body>
+
+<!--<script>-->
+<!--    const attemptLogin = () => {-->
+
+<!--        axios.get('')-->
+<!--            .then(response => {-->
+<!--                console.log(`list of records`, response.data);-->
+
+<!--            })-->
+<!--            .catch(error => console.error(error));-->
+<!--    };-->
+
+
+<!--    attemptLogin();-->
+<!--</script>-->
 </html>
