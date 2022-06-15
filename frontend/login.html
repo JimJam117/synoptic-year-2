@@ -28,8 +28,9 @@
     </div>
     
     <div class="container">
+      <div id="message" class="p-3 mb-2 text-white" style="visibility: hidden; background-color: black;"></div>
       <div class="form-container justify-content-center card-deck mb-3 text-center">
-        <form action="/login" method="POST">
+        <form onsubmit="return false">
          
             <h2 class="mb-3">Login</h2>
             <div >
@@ -42,7 +43,7 @@
               <input class="form-control" placeholder="Password" type="password" id="password" name="password" required> <br>
             </div>
 
-            <button class="btn mb-4 btn-lg btn-primary btn-block" type="submit">Login</button>
+            <button class="btn mb-4 btn-lg btn-primary btn-block" onclick="attemptLogin()">Login</button>
             <a href="/register">Register</a>
 
         </form>
@@ -57,15 +58,36 @@
 <script>
 const attemptLogin = () => {
       
-      axios.get('')
-          .then(response => {
-            console.log(`list of records`, response.data);
+      // get vars from form
+        let email = document.getElementById("email").value;
+        let password = document.getElementById("password").value;
+        
+        // post request
+        axios({
+        method: 'post',
+        url: 'http://localhost:5001/auth/login',
+        data: {
+            email: email,
+            pword: password
+        }
+        }).then(response => {
+            // success
+            console.log(`response from post request`, response);
+            document.getElementById("message").style.visibility = "initial";
+            document.getElementById("message").style.backgroundColor = "green";
+            document.getElementById("message").innerHTML = "logged in successfully";
 
-          })
-          .catch(error => console.error(error));
+        })
+        .catch(error = () => {
+            // error
+            console.error(error)
+            document.getElementById("message").style.visibility = "initial";
+            document.getElementById("message").style.backgroundColor = "red";
+            document.getElementById("message").innerHTML = "Error when logging in";
+        
+        });
     };
   
 
-    attemptLogin();
       </script>
 </html>
