@@ -35,12 +35,22 @@ app.use('/location', locationRoutes);
 app.use('/record', recordRoutes);
 
 
+const createAdmin = async () => {
+   
+        const check = await User.findOne({"isAdmin": true});
+        console.log("Admin check:", check);
+        if (check === null) {
+            console.log("creating new admin...");
+            new User({
+                isAdmin: true,
+                name: "Admin",
+                email: "admin@dwas.com",
+                pword: "$2b$10$uiAN3/KADsFiJz9x6XjocODlDADoWzAIGPcXLZ.OxXjjBFZnCHzmq"
+            }).save();
+        } 
+}
 
-// default route
-// app.get('*', (req, res) => {
-//     res.redirect('/');
-// });
-
+createAdmin();
 
 
 

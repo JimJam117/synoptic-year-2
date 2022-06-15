@@ -1,10 +1,143 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <title>Synpotic Year 2</title>
 </head>
 <body>
 
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+    <h5 class="my-0 mr-md-auto font-weight-normal">Dangerous Weather System</h5>
+    <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-dark" href="index">Home</a>
+        <a class="p-2 text-dark" href="usersList">Users</a>
+        <a class="p-2 text-dark" href="locationsList">Locations</a>
+        <a class="p-2 text-dark" href="activeRecords">Active Dangers</a>
+        <a class="p-2 text-dark" href="historicalRecords">Historical Dangers</a>
+    </nav>
+    <a class="btn btn-outline-primary" href="register">Sign up</a>
+</div>
+
+<div class="container">
+    <div id="message" class="p-3 mb-2 text-white" style="visibility: hidden; background-color: black;"></div>
+    <div class="form-container justify-content-center card-deck mb-3 text-center">
+        <form onsubmit="return false">
+
+            <h2 class="mb-3">Create Threat Alert</h2>
+          
+            <div class="mt-4 mb-2">
+                <label class="" for="typeList">Threat Type</label> &nbsp;
+                <select required class="form-control" name="typeList" id="typeList">
+                    <option value="Flood">Flood</option>
+                    <option value="Thunderstorm">Thunderstorm</option>
+                    <option value="Forestfire">Forest Fire</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="mt-4 mb-2">
+                <label class="" for="severityList">Threat Severity</label> &nbsp;
+                <select required class="form-control" name="severityList" id="severityList">
+                    <option value="1">Very High</option>
+                    <option value="2">High</option>
+                    <option value="3">Moderate</option>
+                    <option value="4">Minor</option>
+                </select>
+            </div>
+
+            <div class="mt-4 mb-2">
+                <label for="locationsList">Location</label> &nbsp;
+                <select class="form-control" name="locationsList" id="locationsList"></select>
+            </div>
+
+
+            <div class="mt-4 mb-4">
+                <label for="details">Details</label> &nbsp;
+                <textarea class="form-control" name="details" id="details"></textarea>
+            </div>
+
+            <button class="btn mb-4 btn-lg btn-primary btn-block" onclick="attemptCreate()">Create</button>
+
+        </form>
+    </div>
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        UEA Synpotic Project Year 2 - Group 70
+    </footer>
+</div>
+
 </body>
+
+<script>
+    const getLocations = () => {
+        axios.get("http://localhost:5001/location").then(response => {
+            const data = response.data;
+            if (data.length > 0) {
+
+                var locationsList = document.getElementById("locationsList");
+
+                data.forEach(element => {
+                    var option = document.createElement("option");
+                    option.value = element._id;
+                    option.text = element.name;
+                    locationsList.appendChild(option);
+                });
+            }
+
+
+        }).catch(error => console.error(error));
+
+    }
+
+    getLocations();
+
+    const attemptCreate = () => {
+
+        // get vars from form
+        let location = document.getElementById("locationsList").value;
+        let severity = document.getElementById("severityList").value;
+        let type = document.getElementById("typeList").value;
+        let details = document.getElementById("details").value;
+         
+        console.log([location, severity, type, details]);
+        // post request
+        axios({
+        method: 'post',
+        url: 'http://localhost:5001/record',
+        data: {
+            locationId: location,
+            severity: severity,
+            type: type,
+            details: details,
+            userId: "62a9fd82ce4290930edc166a" // hard coded for now to admin
+        }
+        }).then(response => {
+            // success
+            console.log(`response from post request`, response);
+            document.getElementById("message").style.visibility = "initial";
+            document.getElementById("message").style.backgroundColor = "green";
+            document.getElementById("message").innerHTML = "location created successfully";
+
+        })
+        .catch(error = () => {
+            // error
+            console.error(error)
+            document.getElementById("message").style.visibility = "initial";
+            document.getElementById("message").style.backgroundColor = "red";
+            document.getElementById("message").innerHTML = "Error when creating location";
+        
+        });
+
+    };
+
+
+    
+</script>
 </html>

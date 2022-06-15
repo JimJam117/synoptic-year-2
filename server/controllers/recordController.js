@@ -1,6 +1,5 @@
-import bcrypt from 'bcrypt'
 import Record from '../models/Record.js'
-
+import User from '../models/User.js'
 
 export const createRecord = async (req, res) => {
     

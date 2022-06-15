@@ -13,7 +13,8 @@ const locationSchema = new mongoose.Schema({
         },
         coordinates: {
             type:String,
-            required:true
+            required:true,
+            unique: true,
         },
         isArchived: {
             type:Boolean,

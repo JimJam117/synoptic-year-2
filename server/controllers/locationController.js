@@ -1,5 +1,5 @@
 import Location from '../models/Location.js'
-
+import User from '../models/User.js'
 
 export const createLocation = async (req, res) => {
     
