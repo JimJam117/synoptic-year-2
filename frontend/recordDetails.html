@@ -41,6 +41,9 @@
         <p><strong>Details: </strong><span id="details"></span></p>
         <p><strong>isArchived: </strong><span id="isArchived"></span></p>
 
+        <button class="btn mb-4 btn-lg btn-primary" id="archiveButton" style="visibility: hidden;" onclick="archive()">Archive</button>
+        <button class="btn mb-4 btn-lg btn-primary" id="unarchiveButton" style="visibility: hidden;" onclick="unarchive()">Unarchive</button>
+
     </div>
 
     <footer class="pt-4 my-md-5 pt-md-5 border-top">
@@ -72,10 +75,65 @@
             document.getElementById("details").innerHTML = data.details;
             document.getElementById("isArchived").innerHTML = data.isArchived;
 
+            if (data.isArchived) {
+                document.getElementById("archiveButton").style.visibility = "hidden";
+                document.getElementById("unarchiveButton").style.visibility = "initial";
+            }
+            else {
+                document.getElementById("archiveButton").style.visibility = "initial";
+                document.getElementById("unarchiveButton").style.visibility = "hidden"; 
+            }
+
 
         }).catch(error => console.error(error));
     };
 
+    
+    const archive = () => {
+        let id = window.location.search.split("?").pop();
+        
+        let url = "http://localhost:5001/record/archive/" + id;
+
+        axios({
+        method: 'put',
+        url: url,
+        params: {
+            id: id
+        },
+        data: {
+            userId: "62a9fd82ce4290930edc166a"
+        }
+        }).then(() => {
+            getRecordDetails();
+        }).catch(error = () => {
+            // error
+            console.error(error)
+        });   
+    }
+
+
+    const unarchive = () => {
+        let id = window.location.search.split("?").pop();
+        
+        let url = "http://localhost:5001/record/unarchive/" + id;
+
+        axios({
+        method: 'put',
+        url: url,
+        params: {
+            id: id
+        },
+        data: {
+            userId: "62a9fd82ce4290930edc166a"
+        }
+        }).then(() => {
+            getRecordDetails();
+        }).catch(error = () => {
+            // error
+            console.error(error)
+        });   
+    }
+    
     getRecordDetails();
     
 </script>

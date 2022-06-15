@@ -175,13 +175,13 @@ export const archiveRecord = async (req, res) => {
 
       // check if this record id exists
       const check = await Record.findOne({_id: req.params.id});
-      if (check === nullRecord) {
+      if (check === null) {
             return res.status(404).send(`Record not found`)
       }
 
     // update Record object
     await Record.findByIdAndUpdate( req.params.id, {
-        isArchived: "True"
+        isArchived: true
       })
       return res.status(201).send(`Record ${req.params.id} archived.`);
     }
@@ -191,6 +191,38 @@ export const archiveRecord = async (req, res) => {
         return res.status(500).send(`Server error ${err}`);
     }
 };
+
+export const unarchiveRecord = async (req, res) => {
+    
+    try {
+        // check if the user is an Admin
+        const user = await User.findOne({ _id : req.body.userId });
+        if (user === null) {
+            return res.status(404).send(`User was not found, please provide userId`)
+        }
+        if (!user.isAdmin) {
+            return res.status(400).send(`User is not admin, cannot update records!`)
+        }
+
+      // check if this record id exists
+      const check = await Record.findOne({_id: req.params.id});
+      if (check === null) {
+            return res.status(404).send(`Record not found`)
+      }
+
+    // update Record object
+    await Record.findByIdAndUpdate( req.params.id, {
+        isArchived: false
+      })
+      return res.status(201).send(`Record ${req.params.id} unarchived.`);
+    }
+
+    catch (err) {
+        console.log(err);
+        return res.status(500).send(`Server error ${err}`);
+    }
+};
+
 
 export const deleteRecord = async (req, res) => {
     

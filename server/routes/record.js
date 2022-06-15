@@ -1,5 +1,5 @@
 import Router from 'express';
-import { archiveRecord, countHowManyActive, countHowManyHstorical, createRecord, deleteRecord, indexActiveRecords, indexAllRecords, indexHistoricalRecords, showRecord, updateRecord } from '../controllers/recordController.js';
+import { archiveRecord, countHowManyActive, countHowManyHstorical, createRecord, deleteRecord, indexActiveRecords, indexAllRecords, indexHistoricalRecords, showRecord, unarchiveRecord, updateRecord } from '../controllers/recordController.js';
 
 const router = Router();
 
@@ -15,7 +15,8 @@ router.post('/', createRecord);
 
 router.put('/:id', updateRecord);
 
-router.put('/:id/archive', archiveRecord);
+router.put('/archive/:id', archiveRecord);
+router.put('/unarchive/:id', unarchiveRecord);
 router.delete('/:id', deleteRecord);
 
 
