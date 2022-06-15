@@ -28,8 +28,9 @@
 </div>
 
 <div class="container">
+    <div id="message" class="p-3 mb-2 text-white" style="visibility: hidden; background-color: black;"></div>
     <div class="form-container justify-content-center card-deck mb-3 text-center">
-        <form action="/login" method="POST">
+        <form onsubmit="return false">
 
             <h2 class="mb-3">Register</h2>
             <div >
@@ -44,11 +45,11 @@
 
             <div >
                 <label class="sr-only"  for="password">Password</label> &nbsp;
-                <input class="form-control" placeholder="Password" type="password" id="password" name="password" required> <br>
+                <input class="form-control" placeholder="Password" type="password" id="password" name="pword" required> <br>
             </div>
 
-            <button class="btn mb-4 btn-lg btn-primary btn-block" type="submit">Register</button>
-            <a href="/register">Already have an account? Login</a>
+            <button class="btn mb-4 btn-lg btn-primary btn-block" onclick="attemptRegister()">Register</button>
+            <a href="/login">Already have an account? Login</a>
 
         </form>
     </div>
@@ -59,18 +60,43 @@
 
 </body>
 
-<!--<script>-->
-<!--    const attemptLogin = () => {-->
+<script>
+    const attemptRegister = () => {
 
-<!--        axios.get('')-->
-<!--            .then(response => {-->
-<!--                console.log(`list of records`, response.data);-->
+        // get vars from form
+        let name = document.getElementById("name").value;
+        let email = document.getElementById("email").value;
+        let password = document.getElementById("password").value;
+        
+        // post request
+        axios({
+        method: 'post',
+        url: 'http://localhost:5001/auth/register',
+        data: {
+            name: name,
+            email: email,
+            pword: password
+        }
+        }).then(response => {
+            // success
+            console.log(`response from post request`, response);
+            document.getElementById("message").style.visibility = "initial";
+            document.getElementById("message").style.backgroundColor = "green";
+            document.getElementById("message").innerHTML = "registered successfully";
 
-<!--            })-->
-<!--            .catch(error => console.error(error));-->
-<!--    };-->
+        })
+        .catch(error = () => {
+            // error
+            console.error(error)
+            document.getElementById("message").style.visibility = "initial";
+            document.getElementById("message").style.backgroundColor = "red";
+            document.getElementById("message").innerHTML = "Error when registering";
+        
+        });
+
+    };
 
 
-<!--    attemptLogin();-->
-<!--</script>-->
+    
+</script>
 </html>
