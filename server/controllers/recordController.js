@@ -1,6 +1,28 @@
 import Record from '../models/Record.js'
 import User from '../models/User.js'
 
+export const countHowManyActive = async (req, res) => {
+    try {
+        Record.count({isArchived: false}, (err, count) => {
+            return res.status(200).json(count);
+        })
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send(`Server error ${err}`);
+    }
+}
+
+export const countHowManyHstorical = async (req, res) => {
+    try {
+        Record.count({isArchived: true}, (err, count) => {
+            return res.status(200).json(count);
+        })
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send(`Server error ${err}`);
+    }
+}
+
 export const createRecord = async (req, res) => {
     
     try {
