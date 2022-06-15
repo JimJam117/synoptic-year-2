@@ -57,7 +57,7 @@ const index = () => {
                 userLink.appendChild(userLinkText)
 
                 // add the href to the link
-                userLink.href = ("/userDetails/" + user._id);
+                userLink.href = ("/userDetails?" + user._id);
 
                 // add the link to our div
                 userElement.appendChild(userLink);

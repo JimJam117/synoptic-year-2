@@ -53,11 +53,11 @@
 
                 // Create location link
                 const locationLink = document.createElement('a')
-                const locationLinkText = document.createTextNode(location._id)
+                const locationLinkText = document.createTextNode(location.name + " (" + location.coordinates + ")")
                 locationLink.appendChild(locationLinkText)
 
                 // add the href to the link
-                locationLink.href = ("/locationDetails/" + location._id);
+                locationLink.href = ("/locationDetails?" + location._id);
 
                 // add the link to our div
                 locationElement.appendChild(locationLink);

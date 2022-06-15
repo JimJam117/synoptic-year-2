@@ -31,15 +31,11 @@
     <div id="message" class="p-3 mb-2 text-white" style="visibility: hidden; background-color: black;"></div>
     
     <div>
-        <h2 id="title">Record Details</h2>
-        <p><strong>Record Id: </strong><span id="id"></span></p>
-        <p><strong>Creator Id: </strong><span id="creatorId"></span></p>
-        <p><strong>Location Id: </strong><span id="locationId"></span></p>
-        <p><strong>Confirmed By User Id: </strong><span id="confirmedByUserID"></span></p>
-        <p><strong>Type of threat: </strong><span id="type"></span></p>
-        <p><strong>Severity rating: </strong><span id="severity"></span></p>
-        <p><strong>Details: </strong><span id="details"></span></p>
-        <p><strong>isArchived: </strong><span id="isArchived"></span></p>
+        <h2 id="title">User Details</h2>
+        <p><strong>User Id: </strong><span id="id"></span></p>
+        <p><strong>Is Admin: </strong><span id="isAdmin"></span></p>
+        <p><strong>User Name: </strong><span id="name"></span></p>
+        <p><strong>Email: </strong><span id="email"></span></p>
 
     </div>
 
@@ -51,32 +47,28 @@
 </body>
 
 <script>
-    const getRecordDetails = () => {
+    const getUserDetails = () => {
 
         let id = window.location.search.split("?").pop();
         
-        let url = "http://localhost:5001/record/" + id;
+        let url = "http://localhost:5001/user/" + id;
 
         console.log(url);
         axios.get(url).then(response => {
-            const data = response.data;
-            console.log(data);
+            const user = response.data;
+            console.log(user);
 
-
-            document.getElementById("id").innerHTML = data._id;
-            document.getElementById("creatorId").innerHTML = data.creatorId;
-            document.getElementById("locationId").innerHTML = data.locationId;
-            document.getElementById("confirmedByUserID").innerHTML = data.confirmedByUserID;
-            document.getElementById("type").innerHTML = data.type;
-            document.getElementById("severity").innerHTML = data.severity;
-            document.getElementById("details").innerHTML = data.details;
-            document.getElementById("isArchived").innerHTML = data.isArchived;
+            document.getElementById("id").innerHTML = user._id;
+            document.getElementById("isAdmin").innerHTML = user.isAdmin;
+            document.getElementById("name").innerHTML = user.name;
+            document.getElementById("email").innerHTML = user.email;
 
 
         }).catch(error => console.error(error));
     };
 
-    getRecordDetails();
+    getUserDetails();
     
 </script>
 </html>
+

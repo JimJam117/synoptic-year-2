@@ -53,7 +53,7 @@ const index = () => {
 
                 // Create record link
                 const recordLink = document.createElement('a')
-                const recordLinkText = document.createTextNode(record._id)
+                const recordLinkText = document.createTextNode(record.type + " level " + record.severity + " @ " + record.locationId + "(" + record._id + ")")
                 recordLink.appendChild(recordLinkText)
 
                 // add the href to the link
