@@ -57,7 +57,7 @@ const index = () => {
                 recordLink.appendChild(recordLinkText)
 
                 // add the href to the link
-                recordLink.href = ("/recordDetails/" + record._id);
+                recordLink.href = ("/recordDetails?" + record._id);
 
                 // add the link to our div
                 recordElement.appendChild(recordLink);

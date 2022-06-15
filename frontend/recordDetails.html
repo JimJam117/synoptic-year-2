@@ -1,10 +1,81 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <title>Synpotic Year 2</title>
 </head>
 <body>
 
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+    <h5 class="my-0 mr-md-auto font-weight-normal">Dangerous Weather System</h5>
+    <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-dark" href="index">Home</a>
+        <a class="p-2 text-dark" href="usersList">Users</a>
+        <a class="p-2 text-dark" href="locationsList">Locations</a>
+        <a class="p-2 text-dark" href="activeRecords">Active Dangers</a>
+        <a class="p-2 text-dark" href="historicalRecords">Historical Dangers</a>
+    </nav>
+    <a class="btn btn-outline-primary" href="register">Sign up</a>
+</div>
+
+<div class="container">
+    <div id="message" class="p-3 mb-2 text-white" style="visibility: hidden; background-color: black;"></div>
+    
+    <div>
+        <h2 id="title">Record Details</h2>
+        <p><strong>Record Id: </strong><span id="id"></span></p>
+        <p><strong>Creator Id: </strong><span id="creatorId"></span></p>
+        <p><strong>Location Id: </strong><span id="locationId"></span></p>
+        <p><strong>Confirmed By User Id: </strong><span id="confirmedByUserID"></span></p>
+        <p><strong>Type of threat: </strong><span id="type"></span></p>
+        <p><strong>Severity rating: </strong><span id="severity"></span></p>
+        <p><strong>Details: </strong><span id="details"></span></p>
+        <p><strong>isArchived: </strong><span id="isArchived"></span></p>
+
+    </div>
+
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        UEA Synpotic Project Year 2 - Group 70
+    </footer>
+</div>
+
 </body>
+
+<script>
+    const getRecordDetails = () => {
+
+        let id = window.location.search.split("?").pop();
+        
+        let url = "http://localhost:5001/record/" + id;
+
+        console.log(url);
+        axios.get(url).then(response => {
+            const data = response.data;
+            console.log(data);
+
+            document.getElementById("id").innerHTML = data._id;
+            document.getElementById("creatorId").innerHTML = data.creatorId;
+            document.getElementById("locationId").innerHTML = data.locationId;
+            document.getElementById("confirmedByUserID").innerHTML = data.confirmedByUserID;
+            document.getElementById("type").innerHTML = data.type;
+            document.getElementById("severity").innerHTML = data.severity;
+            document.getElementById("details").innerHTML = data.details;
+            document.getElementById("isArchived").innerHTML = data.isArchived;
+
+
+        }).catch(error => console.error(error));
+    };
+
+    getRecordDetails();
+    
+</script>
 </html>
